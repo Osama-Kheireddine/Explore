@@ -97,7 +97,9 @@ export class ReviewPage implements AfterViewInit {
       this.showAlert('Error', 'Please search for a location to review!');
     } else {
       const review: Review = {
+        //to run a query to find this user in the user's collection & get their username/name to display beside the review
         title: this.title,
+        user: getAuth().currentUser.email,
         reviewBody: this.reviewBody,
         lat: this.lat,
         lng: this.lng,
@@ -145,6 +147,7 @@ export class ReviewPage implements AfterViewInit {
 }
 
 export interface Review {
+  user: any;
   title: string;
   reviewBody: string;
   lat: number;

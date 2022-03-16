@@ -3,6 +3,7 @@ import { Auth } from '@angular/fire/auth';
 import {
   collection,
   collectionData,
+  CollectionReference,
   doc,
   Firestore,
   setDoc,
@@ -16,7 +17,12 @@ import { Review } from '../pages/review/review.page';
   providedIn: 'root',
 })
 export class ReviewService {
-  constructor(private auth: Auth, private firestore: Firestore, private alertController: AlertController) {}
+  locationName: string;
+  constructor(
+    private auth: Auth,
+    private firestore: Firestore,
+    private alertController: AlertController
+  ) {}
 
   //take a review object, upload it to the database
   async addReview(review: Review) {
@@ -30,12 +36,14 @@ export class ReviewService {
     );
 
     await setDoc(revDocRef, review);
-    // then we want to add that review's reference to the location the use has specified
-    // reverse geocode so the path looks like:
-    // 'locationReviews/${reverseGeocodedLatLng}/reviews'
 
-    this.reverseGeocode(review.lat, review.lng);
-    // const locationReviewRef = ;
+    this.reverseGeocode(review.lat, review.lng, review);
+  }
+
+  async addReviewToLocation(locationReviewName: string, userReview: any){
+    //Now to add the user's review to a collection for all reviews on the location supplied
+    const locationReviewRef = doc(this.firestore, `locationReviews/${locationReviewName}/reviews/${userReview.title},${userReview.date}`);
+    await setDoc(locationReviewRef, userReview);
   }
 
   //get reviews return a list of the user's reviews
@@ -49,7 +57,7 @@ export class ReviewService {
     return collectionData(reviewRef) as Observable<Review[]>;
   }
 
-  reverseGeocode(latitude: number, longitude: number) {
+  reverseGeocode(latitude: number, longitude: number, userReview: any) {
     //parse the numbers inputted (lat & lng)
     const geocoder = new google.maps.Geocoder();
     const latlng = {
@@ -60,7 +68,9 @@ export class ReviewService {
       .geocode({ location: latlng })
       .then((response) => {
         if (response.results[0]) {
-          return response.results[0].formatted_address;
+          this.locationName = response.results[0].formatted_address;
+          //call the method to add the locations review reference to it's own table
+          this.addReviewToLocation(this.locationName, userReview);
         } else {
           this.showAlert(
             'Error',
