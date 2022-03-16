@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
-
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   imports: [
     CommonModule,
+    GoogleMapsModule,
     FormsModule,
     IonicModule,
     HomePageRoutingModule

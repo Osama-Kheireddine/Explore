@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="post"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create a Review</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <input #mapSearchField class="my-map-search-field" type="text" placeholder="Search"/>
+  <google-map
+    width="100%"
+    [center]="initialCoord"
+    [options]="mapConfigurations"
+  >
+  </google-map>
+  <form>
+    <div>
+      <ion-card>
+        <ion-card-title>Write your review here</ion-card-title>
+        <ion-item>
+          <ion-input
+            placeholder="Title"
+            [(ngModel)]="title"
+            name="title"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            placeholder="Start typing..."
+            [(ngModel)]="reviewBody"
+            name="review"
+          ></ion-input>
+        </ion-item>
+        <ion-button (click)="postReview()">Post!</ion-button>
+      </ion-card>
+      <ion-button (click)="presentModal()">Get Reviews</ion-button>
+    </div>
+  </form>
+
+</ion-content>

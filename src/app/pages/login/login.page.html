@@ -1,0 +1,57 @@
+<ion-content>
+  <!-- BANNER AND NAME OF APP HERE STYLE IT TO BE HIGHER UP ABOVE THE LOGIN FORM (THIS IS NOT FINAL (H1 THING))-->
+  <h1 style="color: #91d4d1; text-align: center">
+    EXPLORE <ion-icon name="search"></ion-icon>
+  </h1>
+
+  <form>
+    <div class="input-group">
+      <!-- email/password login -->
+      <div class="email-password-signin">
+        <ion-item>
+          <ion-input
+            placeholder="email"
+            name="usersEmail"
+            type="text"
+            required
+            [(ngModel)]="usersEmail"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            placeholder="password"
+            name="password"
+            type="password"
+            required
+            [(ngModel)]="usersPassword"
+          ></ion-input>
+        </ion-item>
+      </div>
+    </div>
+    <!-- login button -->
+    <ion-button
+      class="loginButton"
+      type="submit"
+      expand="block"
+      (click)="signIn()"
+      >Login</ion-button
+      >
+      <!-- (click)="signIn(email.value, password.value)" -->
+
+    <!-- Google login -->
+    <ion-button
+      class="googleButton"
+      type="button"
+      expand="block"
+      (click)="googleAuthLogIn()"
+      ><ion-icon name="logo-google" slot="start"></ion-icon> Login with
+      Google</ion-button
+    >
+
+    <!-- sign up button -->
+    <ion-button class="signUpButton" [routerLink]="['/register']" expand="block"
+      >Don't have an account? Signup</ion-button
+    >
+  </form>
+</ion-content>

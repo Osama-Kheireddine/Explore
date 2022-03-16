@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "explore-users": {
+      "hosting": {
+        "app": [
+          "explore-users"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "explore-users"
+  }
+}

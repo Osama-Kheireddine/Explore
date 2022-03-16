@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sign Up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- sign up form -->
+  <form>
+    <div class="input-group">
+      <div class="email-password-signup">
+        <ion-item>
+          <ion-input name="email" placeholder="Enter your email address" type="email" [(ngModel)]="usersEmailAddress" #email required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input name="password" placeholder="Enter a password" type="password" [(ngModel)]="usersPassword" #password required></ion-input>
+        </ion-item>
+      </div>
+      <!-- do the commented code below later -->
+      <!-- <ion-item>
+        <ion-input placeholder="First Name" type="text" #fName required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input placeholder="Last Name" type="text" #lName required></ion-input>
+      </ion-item> -->
+    </div>
+    <ion-button class="signUpButton" type="submit" expand="block" (click)="signUp()">
+      Signup
+    </ion-button>
+  </form>
+</ion-content>

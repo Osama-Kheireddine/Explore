@@ -1,0 +1,26 @@
+ion-content{
+  --ion-color-primary: #205566; //for changing the main color of the button
+  --padding-top: 40%;
+    --padding-start: 10%;
+    --padding-end: 10%;
+  --background: url('https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_667/https://thatwildidea.co.uk/wp-content/uploads/2019/09/photographing-mountains-portrait-mode.jpg') 0 0/100% 100% no-repeat;
+}
+
+.input-group{
+  //background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.loginButton, .googleButton, .signUpButton{
+  color: #fff;
+}
+
+ion-input{
+  color: #205566;
+}
+
+.email-password-signin{
+  text-align: center;
+}

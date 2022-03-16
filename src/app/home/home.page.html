@@ -1,20 +1,31 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content>
+  <google-map height="100%" width="100%"
+  [center]="center"
+  [zoom]="zoom"
+  [options]="mapConfigurations"
+  >
+  </google-map>
+    <div class="button-inputs">
+      <div class="settings-button">
+        <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+          <ion-fab-button [routerLink]="['/account']">
+            <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </div>
+      <div class="post-button">
+        <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+          <ion-fab-button>
+            <ion-icon name="grid-outline" [routerLink]="['/post']"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </div>
+      <div class="search-button">
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+          <ion-fab-button>
+            <ion-icon name="search"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </div>
+    </div>
 </ion-content>
