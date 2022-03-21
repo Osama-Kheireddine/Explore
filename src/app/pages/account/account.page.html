@@ -8,7 +8,50 @@
 </ion-header>
 
 <ion-content>
-  <div>
-    <ion-button (click)="signOut()">SignOut</ion-button>
-  </div>
+  <ion-list>
+    <ion-item button [routerLink]="['']">
+      <ion-icon name="camera-outline" slot="start"></ion-icon>
+      <span>Photo</span>
+      <ion-icon
+        class="icon-chevron"
+        name="chevron-forward-outline"
+        slot="end"
+      ></ion-icon>
+    </ion-item>
+
+    <ion-item button [routerLink]="['']">
+      <ion-icon name="newspaper-outline" slot="start"></ion-icon>
+      <span>Review</span>
+      <ion-icon
+        class="icon-chevron"
+        name="chevron-forward-outline"
+        slot="end"
+      ></ion-icon>
+    </ion-item>
+
+    <ion-item button [routerLink]="['']">
+      <ion-icon name="walk-outline" slot="start"></ion-icon>
+      <span>Trails</span>
+      <ion-icon
+        class="icon-chevron"
+        name="chevron-forward-outline"
+        slot="end"
+      ></ion-icon>
+    </ion-item>
+
+    <ion-item button [routerLink]="['']">
+      <ion-icon name="cog-outline" slot="start"></ion-icon>
+      <span>Prefernces</span>
+      <ion-icon
+        class="icon-chevron"
+        name="chevron-forward-outline"
+        slot="end"
+      ></ion-icon>
+    </ion-item>
+  </ion-list>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-item style="color: #205566;" button (click)="signOut()">Sign-Out</ion-item>
+  </ion-toolbar>
+</ion-footer>
