@@ -8,17 +8,30 @@
 </ion-header>
 
 <ion-content>
-  <input #mapSearchField class="my-map-search-field" type="text" placeholder="Search"/>
+  <input
+    #mapSearchField
+    class="my-map-search-field"
+    type="text"
+    placeholder="Search"
+  />
   <google-map
     width="100%"
     [center]="initialCoord"
     [options]="mapConfigurations"
   >
+    <map-marker
+      *ngFor="let marker of markers"
+      [position]="marker.position"
+      [label]="marker.label"
+      [title]="marker.title"
+      [options]="marker.options"
+    >
+    </map-marker>
   </google-map>
   <form>
     <div>
       <ion-card>
-        <ion-card-title>Write your review here</ion-card-title>
+        <ion-card-title style="text-align: center; margin-top: 1%;">Write your review here</ion-card-title>
         <ion-item>
           <ion-input
             placeholder="Title"
@@ -38,5 +51,4 @@
       <ion-button (click)="presentModal()">Get Reviews</ion-button>
     </div>
   </form>
-
 </ion-content>

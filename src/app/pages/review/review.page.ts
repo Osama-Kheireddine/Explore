@@ -21,7 +21,8 @@ import { ReviewService } from 'src/app/services/review.service';
 export class ReviewPage implements AfterViewInit {
   // @ViewChild is used to query the input element & the map
   @ViewChild('mapSearchField') searchField: ElementRef; //mapSearchField comes from #mapSearchField in the input element
-  @ViewChild(GoogleMap) map: GoogleMap; //the map is a component so we can query component instead of template reference similar to above
+  // eslint-disable-next-line max-len
+  @ViewChild(GoogleMap, { static: false }) map: GoogleMap; //the map is a component so we can query component instead of template reference similar to above
 
   mapConfigurations = {
     disableDefaultUI: true,
@@ -37,6 +38,7 @@ export class ReviewPage implements AfterViewInit {
   lng: number;
   reviewBody: string;
   reviewsList: Review[];
+  markers = [];
   constructor(
     private review: ReviewService,
     private modalController: ModalController,
@@ -76,13 +78,35 @@ export class ReviewPage implements AfterViewInit {
           bounds.union(place.geometry.viewport);
           this.lat = place.geometry.location.lat();
           this.lng = place.geometry.location.lng();
+          this.markers = [];
+          this.addMarker();
         } else {
           this.lat = place.geometry.location.lat();
           this.lng = place.geometry.location.lng();
+          this.markers = [];
+          this.addMarker();
           bounds.extend(place.geometry.location);
         }
       });
       this.map.fitBounds(bounds);
+    });
+  }
+
+  addMarker() {
+    this.markers.push({
+      position: {
+        lat: this.lat,
+        lng: this.lng,
+      },
+      label: {
+        color: 'red',
+        text: 'Review here ',
+      },
+      title: 'Marker title ',
+      info: 'Marker info ',
+      options: {
+        animation: google.maps.Animation.DROP,
+      },
     });
   }
 
