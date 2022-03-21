@@ -1,31 +1,39 @@
 <ion-content>
-  <google-map height="100%" width="100%"
-  [center]="center"
-  [zoom]="zoom"
-  [options]="mapConfigurations"
+  <input
+    #mapSearchField
+    class="my-map-search-field"
+    type="text"
+    placeholder="Search..."
+  />
+  <google-map
+    height="100%"
+    width="100%"
+    [center]="center"
+    [zoom]="zoom"
+    [options]="mapConfigurations"
   >
   </google-map>
-    <div class="button-inputs">
-      <div class="settings-button">
-        <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-          <ion-fab-button [routerLink]="['/account']">
-            <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
-          </ion-fab-button>
-        </ion-fab>
-      </div>
-      <div class="post-button">
-        <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-          <ion-fab-button>
-            <ion-icon name="grid-outline" [routerLink]="['/post']"></ion-icon>
-          </ion-fab-button>
-        </ion-fab>
-      </div>
-      <div class="search-button">
-        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-          <ion-fab-button>
-            <ion-icon name="search"></ion-icon>
-          </ion-fab-button>
-        </ion-fab>
-      </div>
+  <div class="button-inputs">
+    <div class="settings-button">
+      <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+        <ion-fab-button [routerLink]="['/account']">
+          <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
     </div>
+    <div class="post-button">
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button>
+          <ion-icon name="grid-outline" [routerLink]="['/post']"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+    <!-- <div class="search-button" #mapSearchField>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button>
+          <ion-input> Search!! </ion-input>
+        </ion-fab-button>
+      </ion-fab>
+    </div> -->
+  </div>
 </ion-content>

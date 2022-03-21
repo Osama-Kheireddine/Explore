@@ -48,7 +48,7 @@ export class ReviewPage implements AfterViewInit {
 
   // use ngAfterViewInit() to tie the two together (map and search bar input)
   ngAfterViewInit() {
-    //create new search box instance
+    //create new search box
     const searchBox = new google.maps.places.SearchBox(
       this.searchField.nativeElement //pass the searchField as a native element
       //this ties our inputfield with the searchBox
