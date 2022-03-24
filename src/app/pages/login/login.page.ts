@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { getAuth } from 'firebase/auth';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -18,7 +18,8 @@ export class LoginPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private loadingController: LoadingController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
@@ -38,6 +39,7 @@ export class LoginPage implements OnInit {
         if (getAuth().currentUser !== null) {
           //redirect to home
           this.router.navigateByUrl('/home');
+          this.presentToast();
         }else {
           this.showAlert('Login Failed','Please try again!');
         }
@@ -54,6 +56,7 @@ export class LoginPage implements OnInit {
         if (getAuth().currentUser !== null) {
           //redirect to home
           this.router.navigateByUrl('/home');
+          this.presentToast();
         }else {
           this.showAlert('Login Failed','Please try again!');
         }
@@ -66,6 +69,14 @@ export class LoginPage implements OnInit {
 
   async signOut() {
     await this.authService.signOut(); //sign the user out
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Successful login',
+      duration: 1000
+    });
+    toast.present();
   }
 
   //ALERT CONTROLLER FOR LOOKS

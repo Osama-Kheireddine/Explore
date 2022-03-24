@@ -2,15 +2,17 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
-import { Geolocation } from '@capacitor/geolocation';
-import { AlertController, LoadingController, ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import {
+  AlertController,
+  LoadingController,
+  ModalController,
+  ToastController,
+} from '@ionic/angular';
 import { getAuth } from 'firebase/auth';
-import { Observable } from 'rxjs';
-import { ViewReviewsPage } from 'src/app/modals/view-reviews/view-reviews.page';
 import { ReviewService } from 'src/app/services/review.service';
 
 @Component({
@@ -35,15 +37,15 @@ export class ReviewPage implements AfterViewInit {
   };
   title: string;
   lat: number;
+  locationName: string;
   lng: number;
   reviewBody: string;
   reviewsList: Review[];
   markers = [];
   constructor(
     private review: ReviewService,
-    private modalController: ModalController,
     private alertController: AlertController,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
   ) {}
 
   // use ngAfterViewInit() to tie the two together (map and search bar input)
@@ -113,23 +115,12 @@ export class ReviewPage implements AfterViewInit {
   async postReview() {
     const loading = await this.loadingController.create();
     await loading.present();
-    //get the current date to add to the review
-    const currentDate = new Date();
-    const formattedDate = this.formatDate(currentDate);
+
     //flag if the location's lat & long are empty
     if (!this.lat && !this.lng) {
       this.showAlert('Error', 'Please search for a location to review!');
     } else {
-      const review: Review = {
-        //to run a query to find this user in the user's collection & get their username/name to display beside the review
-        title: this.title,
-        user: getAuth().currentUser.email,
-        reviewBody: this.reviewBody,
-        lat: this.lat,
-        lng: this.lng,
-        date: formattedDate,
-      };
-      await this.review.addReview(review);
+      this.reverseGeocode(this.lat, this.lng);
     }
     await loading.dismiss();
   }
@@ -151,14 +142,52 @@ export class ReviewPage implements AfterViewInit {
     return formattedDate;
   }
 
-  //MODAL:
-  async presentModal() {
-    const modal = await this.modalController.create({
-      component: ViewReviewsPage,
-      cssClass: '',
-    });
-    return await modal.present();
+  //now we want to get the latitude & longitude of the review
+  //then display that result as the review's location
+  //reverse geo-code!!
+  async reverseGeocode(latitude: number, longitude: number) {
+    //parse the numbers inputted (lat & lng)
+    const geocoder = new google.maps.Geocoder();
+    const latlng = {
+      lat: parseFloat(latitude.toString()),
+      lng: parseFloat(longitude.toString()),
+    };
+    await geocoder
+      .geocode({ location: latlng })
+      .then((response) => {
+        if (response.results[0]) {
+          this.locationName = response.results[0].formatted_address;
+
+          //finalize the post here
+          this.finalizePost(this.locationName);
+        } else {
+          this.showAlert(
+            'Error',
+            'An error has occurred, please try again later'
+          );
+        }
+      })
+      .catch((e) => window.alert('Geocoder failed due to: ' + e));
   }
+
+  async finalizePost(location: string) {
+    //get the current date to add to the review
+    const currentDate = new Date();
+    const formattedDate = this.formatDate(currentDate);
+    const review: Review = {
+      //to run a query to find this user in the user's collection & get their username/name to display beside the review
+      title: this.title,
+      user: getAuth().currentUser.email,
+      reviewBody: this.reviewBody,
+      locName: location,
+      lat: this.lat,
+      lng: this.lng,
+      date: formattedDate,
+    };
+    await this.review.addReview(review);
+    window.location.reload();
+  }
+
   //ALERT CONTROLLER FOR LOOKS
   async showAlert(header, message) {
     const alert = await this.alertController.create({
@@ -174,6 +203,7 @@ export interface Review {
   user: any;
   title: string;
   reviewBody: string;
+  locName: string;
   lat: number;
   lng: number;
   date: any;

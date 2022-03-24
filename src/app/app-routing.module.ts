@@ -29,9 +29,8 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule),
-    ...canActivate(redirectLoggedIn)
-  },
+    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
+   },
   {
     path: 'post',
     loadChildren: () => import('./pages/post/post.module').then( m => m.PostPageModule),
@@ -43,8 +42,13 @@ const routes: Routes = [
     ...canActivate(redirectUnauthorizedToLogin)
   },
   {
-    path: 'view-reviews',
-    loadChildren: () => import('./modals/view-reviews/view-reviews.module').then( m => m.ViewReviewsPageModule),
+    path: 'reviews',
+    loadChildren: () => import('./userPosts/reviews/reviews.module').then( m => m.ReviewsPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path: 'detailed-review',
+    loadChildren: () => import('./userPosts/detailed-review/detailed-review.module').then( m => m.DetailedReviewPageModule),
     ...canActivate(redirectUnauthorizedToLogin)
   },
 ];

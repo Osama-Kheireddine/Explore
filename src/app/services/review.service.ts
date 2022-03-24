@@ -40,9 +40,12 @@ export class ReviewService {
     this.reverseGeocode(review.lat, review.lng, review);
   }
 
-  async addReviewToLocation(locationReviewName: string, userReview: any){
+  async addReviewToLocation(locationReviewName: string, userReview: any) {
     //Now to add the user's review to a collection for all reviews on the location supplied
-    const locationReviewRef = doc(this.firestore, `locationReviews/${locationReviewName}/reviews/${userReview.title},${userReview.date}`);
+    const locationReviewRef = doc(
+      this.firestore,
+      `locationReviews/${locationReviewName}/reviews/${userReview.title},${userReview.date}`
+    );
     await setDoc(locationReviewRef, userReview);
   }
 

@@ -32,7 +32,6 @@ export class AuthService {
       .then((res) => {
         //create a collection named users
         const userRef = collection(this.firestore, 'users'); //add to db
-        console.log(res.user);
         //create a document and give its unique id the user's uid
         return setDoc(doc(userRef, res.user.uid), { email: res.user.email });
       })
@@ -46,7 +45,6 @@ export class AuthService {
   async signIn(email: string, password: string) {
     await signInWithEmailAndPassword(this.auth, email, password)
       .then((res) => {
-        console.log('signin successful');
         this.user = res.user.email;
       })
       .catch((err) => {

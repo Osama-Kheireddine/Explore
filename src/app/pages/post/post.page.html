@@ -8,38 +8,37 @@
 </ion-header>
 
 <ion-content>
-
-  <!-- ADD THE COMMENTED CODE TO A MODAL PAGE TO USE FOR POSTING -->
-  <!-- <ion-grid>
-    <ion-row>
-      <ion-col size="6" *ngFor="let photo of photoService.photos; index as position">
-        <ion-img [src]="photo.webviewPath"></ion-img>
-      </ion-col>
-    </ion-row>
-  </ion-grid> -->
-  <ion-list>
-    <ion-item button (click)="takePhoto()">
-      <ion-icon name="camera-outline" slot="start"></ion-icon>
+  <ion-card>
+    <ion-list>
+      <ion-item button (click)="takePhoto()">
+        <ion-icon name="camera-outline" slot="start"></ion-icon>
         <span>Photo</span>
-      <ion-icon class="icon-chevron" name="chevron-forward-outline" slot="end"></ion-icon>
-    </ion-item>
+        <ion-icon
+          class="icon-chevron"
+          name="chevron-forward-outline"
+          slot="end"
+        ></ion-icon>
+      </ion-item>
 
-    <ion-item button [routerLink]="['/review']">
-      <ion-icon name="newspaper-outline" slot="start"></ion-icon>
+      <ion-item button [routerLink]="['/review']">
+        <ion-icon name="newspaper-outline" slot="start"></ion-icon>
         <span>Review</span>
-      <ion-icon class="icon-chevron" name="chevron-forward-outline" slot="end"></ion-icon>
-    </ion-item>
+        <ion-icon
+          class="icon-chevron"
+          name="chevron-forward-outline"
+          slot="end"
+        ></ion-icon>
+      </ion-item>
 
-    <ion-item button>
-      <ion-icon name="walk-outline" slot="start"></ion-icon>
+      <ion-item button>
+        <ion-icon name="walk-outline" slot="start"></ion-icon>
         <span>Trails</span>
-      <ion-icon class="icon-chevron" name="chevron-forward-outline" slot="end"></ion-icon>
-    </ion-item>
-
-    <!-- <ion-item button>
-      <ion-icon name="information-outline" slot="start"></ion-icon>
-        <span>Facts</span>
-      <ion-icon class="icon-chevron" name="chevron-forward-outline" slot="end"></ion-icon>
-    </ion-item> -->
-  </ion-list>
+        <ion-icon
+          class="icon-chevron"
+          name="chevron-forward-outline"
+          slot="end"
+        ></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ion-card>
 </ion-content>

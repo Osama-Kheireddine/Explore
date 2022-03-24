@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons (click)="dismissModal()">
+      <ion-back-button></ion-back-button>
+      <ion-title>Close</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <google-map height="35%" [options]="mapConfigurations">
+    <map-marker [position]="markerCoords.position"></map-marker>
+  </google-map>
+
+  <ion-card>
+    <ion-item>
+      <ion-avatar slot="start">
+        <!-- <img src="../../assets/user.jpg"> -->
+      </ion-avatar>
+      <ion-label>
+        <h3 *ngIf="auth === review.user">
+          <h3 color="secondary">Posted by:</h3>
+          You
+        </h3>
+        <p>{{review.date}}</p>
+      </ion-label>
+    </ion-item>
+    <ion-card-header>
+      <ion-card-title>{{review.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content> {{review.reviewBody}} </ion-card-content>
+    <!-- Add infinite scroll for comments -->
+  </ion-card>
+</ion-content>

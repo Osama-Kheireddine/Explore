@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { getAuth } from '@angular/fire/auth';
 import { GoogleMap } from '@angular/google-maps';
 
 import { Geolocation } from '@capacitor/geolocation';
@@ -29,6 +30,7 @@ export class HomePage implements OnInit, AfterViewInit {
     this.lat = coordinates.coords.latitude;
     this.long = coordinates.coords.longitude;
     this.center = { lat: this.lat, lng: this.long };
+
   }
 
   ngAfterViewInit(){
