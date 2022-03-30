@@ -22,6 +22,7 @@ export class HomePage implements OnInit, AfterViewInit {
     disableDefaultUI: true,
     fullScreenControl: false,
     zoomControl: false,
+    mapTypeId: 'hybrid'
   };
 
   constructor(public modalController: ModalController) {}

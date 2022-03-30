@@ -32,24 +32,28 @@ export class PhotoService {
   }
 
   async uploadImage(cameraFile: Photo) {
-    const user = getAuth().currentUser.email;
-    //substring(29) is for localhost
-    const fileName = cameraFile.webPath.substring(29);
-    const photoPath = `uploads/${user}/${fileName}.png`;
+    const email = getAuth().currentUser.email;
+    const emailsplit = email.split('@');
+    const fileName = cameraFile.webPath;
+    const split = fileName.split('/');
+    const fileNameSplit = split[split.length-1];
+
+    const photoPath = `uploads/${emailsplit[0]}/${fileNameSplit}.png`;
     const storageRef = ref(getStorage(), photoPath);
     const response = await fetch(cameraFile.webPath);
     const blob = await response.blob();//we will upload the blob
+    console.log(`photos/${emailsplit[0]}/images/${fileNameSplit}`);
 
     await uploadBytes(storageRef, blob)
-      .then((snapshot) => {
-        console.log('photo uploaded', snapshot.ref);
+      .then((res) => {
+        console.log('photo uploaded', res.ref);
         // add the image to the user's photos collection
         const photoRef = doc(
           this.firestore,
-          `photos/${user}/images/${fileName}`
+          `photos/${emailsplit[0]}/images/${fileNameSplit}`
         );
         const photoToAdd: DatabasePhotoRef = {
-          path: fileName,
+          path: fileNameSplit,
         };
         setDoc(photoRef, photoToAdd);
       })

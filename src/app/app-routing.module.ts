@@ -51,6 +51,10 @@ const routes: Routes = [
     loadChildren: () => import('./userPosts/detailed-review/detailed-review.module').then( m => m.DetailedReviewPageModule),
     ...canActivate(redirectUnauthorizedToLogin)
   },
+  {
+    path: 'user-photos',
+    loadChildren: () => import('./userPosts/user-photos/user-photos.module').then( m => m.UserPhotosPageModule)
+  },
 ];
 
 @NgModule({
