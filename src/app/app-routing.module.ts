@@ -54,7 +54,11 @@ const routes: Routes = [
   {
     path: 'user-photos',
     loadChildren: () => import('./userPosts/user-photos/user-photos.module').then( m => m.UserPhotosPageModule)
+  },  {
+    path: 'detailed-image',
+    loadChildren: () => import('./userPosts/detailed-image/detailed-image.module').then( m => m.DetailedImagePageModule)
   },
+
 ];
 
 @NgModule({

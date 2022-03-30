@@ -1,9 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>userPhotos</ion-title>
+    <ion-buttons>
+      <ion-back-button slot="start" defaultHref="account"></ion-back-button>
+      <ion-title>Your Photos</ion-title>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  
+  <ion-grid>
+    <ion-row>
+      <ion-col class="singleImage" size="6" *ngFor="let image of images">
+        <ion-img  src="{{image.path}}" alt="" (click)="openModal(image.path)"></ion-img>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
