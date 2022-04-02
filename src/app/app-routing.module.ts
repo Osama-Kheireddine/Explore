@@ -58,6 +58,10 @@ const routes: Routes = [
     path: 'detailed-image',
     loadChildren: () => import('./userPosts/detailed-image/detailed-image.module').then( m => m.DetailedImagePageModule)
   },
+  {
+    path: 'trails',
+    loadChildren: () => import('./pages/trails/trails.module').then( m => m.TrailsPageModule)
+  },
 
 ];
 

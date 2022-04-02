@@ -108,7 +108,10 @@ export class ReviewPage implements AfterViewInit {
       info: 'Marker info ',
       options: {
         animation: google.maps.Animation.DROP,
+        icon: '../../../assets/icon/mapMarkerBlueDot.jpg'
       },
+      opacity: 0.6,
+      //MUST CHANGE SIZE OF MARKER, ALSO ADD THIS MARKER CODE TO TRAILS AND REMOVE FROM THIS
     });
   }
 
