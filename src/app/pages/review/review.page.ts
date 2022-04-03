@@ -1,9 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { Router } from '@angular/router';
 import {
@@ -45,7 +40,7 @@ export class ReviewPage implements AfterViewInit {
   constructor(
     private review: ReviewService,
     private alertController: AlertController,
-    private loadingController: LoadingController,
+    private loadingController: LoadingController
   ) {}
 
   // use ngAfterViewInit() to tie the two together (map and search bar input)
@@ -108,7 +103,7 @@ export class ReviewPage implements AfterViewInit {
       info: 'Marker info ',
       options: {
         animation: google.maps.Animation.DROP,
-        icon: '../../../assets/icon/mapMarkerBlueDot.jpg'
+        icon: '../../../assets/icon/mapMarkerBlueDot.jpg',
       },
       opacity: 0.6,
       //MUST CHANGE SIZE OF MARKER, ALSO ADD THIS MARKER CODE TO TRAILS AND REMOVE FROM THIS
@@ -140,6 +135,8 @@ export class ReviewPage implements AfterViewInit {
       date.getHours() +
       ':' +
       date.getMinutes() +
+      ':' +
+      date.getSeconds() +
       ':' +
       date.getMilliseconds();
     return formattedDate;

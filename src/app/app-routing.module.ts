@@ -53,14 +53,18 @@ const routes: Routes = [
   },
   {
     path: 'user-photos',
-    loadChildren: () => import('./userPosts/user-photos/user-photos.module').then( m => m.UserPhotosPageModule)
-  },  {
-    path: 'detailed-image',
-    loadChildren: () => import('./userPosts/detailed-image/detailed-image.module').then( m => m.DetailedImagePageModule)
+    loadChildren: () => import('./userPosts/user-photos/user-photos.module').then( m => m.UserPhotosPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
   },
   {
-    path: 'trails',
-    loadChildren: () => import('./pages/trails/trails.module').then( m => m.TrailsPageModule)
+    path: 'detailed-image',
+    loadChildren: () => import('./userPosts/detailed-image/detailed-image.module').then( m => m.DetailedImagePageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path: 'track-trail',
+    loadChildren: () => import('./pages/track-trail/track-trail.module').then( m => m.TrackTrailPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
   },
 
 ];

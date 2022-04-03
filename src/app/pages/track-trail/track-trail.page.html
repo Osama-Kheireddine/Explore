@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-back-button defaultHref="post"></ion-back-button>
+      <ion-title>Track a Walk</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <google-map width="100%" height="90%"
+    [options]="mapConfigurations"
+    [center]="center"
+  >
+  <map-polyline [options]="polylineOpt"></map-polyline>
+  </google-map>
+  <div class="track-button">
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="!isTracking">
+      <ion-fab-button (click)="startTracking()">
+        <ion-icon name="locate"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="isTracking">
+      <ion-fab-button (click)="stopTracking()" >
+        <ion-icon name="pause"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+</ion-content>

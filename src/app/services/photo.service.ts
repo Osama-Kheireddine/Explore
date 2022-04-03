@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
 export class PhotoService {
   photoRef: DatabasePhotoRef[];
   constructor(
-    private db: Firestore,
     private auth: Auth,
     private firestore: Firestore,
     private storage: Storage

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { TrailsPage } from './trails.page';
+import { TrackTrailPage } from './track-trail.page';
 
-describe('TrailsPage', () => {
-  let component: TrailsPage;
-  let fixture: ComponentFixture<TrailsPage>;
+describe('TrackTrailPage', () => {
+  let component: TrackTrailPage;
+  let fixture: ComponentFixture<TrackTrailPage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TrailsPage ],
+      declarations: [ TrackTrailPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TrailsPage);
+    fixture = TestBed.createComponent(TrackTrailPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
