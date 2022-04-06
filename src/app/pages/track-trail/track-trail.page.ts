@@ -42,31 +42,39 @@ export class TrackTrailPage implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit() {
-    const path = []; //we can upload the polylines to firebase and then get them back when we want to display past trails
+    // eslint-disable-next-line max-len
+    const path = [{lat: this.mapMarkers.lat}]; //we can upload the polylines to firebase and then get them back when we want to display past trails
     this.polylineOpt = { ...this.polylineOpt, path };
   }
 
   startTracking() {
     this.isTracking = true;
-    this.watch = Geolocation.watchPosition({}, (position, err) => {
+    this.watch = Geolocation.watchPosition({timeout: 4000, enableHighAccuracy: true}, (position, err) => {
       //get the position, add it to the markers array for database entry
       console.log('new pos: ', position);
       if (position) {
-        // this.markers;
+        const marker: Markers = {
+          lat: position.coords.latitude,
+        lng: position.coords.longitude,
+        timestamp: position.timestamp
+        };
+        //call draw polyline method
         this.addNewLocation(
           position.coords.latitude,
           position.coords.longitude,
           position.timestamp
         );
+        this.mapMarkers.push(marker);
+        console.log(this.mapMarkers);
       }
     });
   }
 
   stopTracking() {
+    this.presentToast();
     Geolocation.clearWatch({ id: this.watch }).then(() => {
       this.isTracking = false;
     });
-    this.presentToast();
   }
 
   async presentToast() {
@@ -86,7 +94,7 @@ export class TrackTrailPage implements OnInit, AfterViewInit {
     };
     this.mapMarkers.push(marker);//adds to marker array
 
-    this.trackingService.add(marker);
+    // this.trackingService.add(marker);
 
   }
 }
