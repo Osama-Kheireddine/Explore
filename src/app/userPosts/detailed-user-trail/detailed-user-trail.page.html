@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons style="color: #205566;" (click)="dismissModal()" slot="start">
+      Close
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <google-map [options]="mapConfigurations">
+    <map-polyline [path]="verticies" [options]="polylineOpt">
+    </map-polyline>
+  </google-map>
+  <ion-card>
+    <ion-item>
+      <ion-icon name="walk" slot="start"></ion-icon>
+      <ion-label>Trail from: {{trail.date}}</ion-label>
+    </ion-item>
+    <ion-card-content> Trail starting location: {{trail.points[0].lat}} , {{trail.points[0].lng}}</ion-card-content>
+  </ion-card>
+</ion-content>

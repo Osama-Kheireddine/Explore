@@ -66,6 +66,23 @@ const routes: Routes = [
     loadChildren: () => import('./pages/track-trail/track-trail.module').then( m => m.TrackTrailPageModule),
     ...canActivate(redirectUnauthorizedToLogin)
   },
+  {
+    path: 'view-your-trails',
+    loadChildren: () => import('./userPosts/view-your-trails/view-your-trails.module').then( m => m.ViewYourTrailsPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path: 'detailed-user-trail',
+    loadChildren: () => import('./userPosts/detailed-user-trail/detailed-user-trail.module').then( m => m.DetailedUserTrailPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path: 'view-all-reviews',
+    loadChildren: () => import('./pages/view-all-reviews/view-all-reviews.module').then( m => m.ViewAllReviewsPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
+
+
 
 ];
 

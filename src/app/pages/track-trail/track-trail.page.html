@@ -12,7 +12,7 @@
     [options]="mapConfigurations"
     [center]="center"
   >
-  <map-polyline [options]="polylineOpt"></map-polyline>
+  <map-polyline [path]="polylineOpt.path" [options]="polylineOpt"></map-polyline>
   </google-map>
   <div class="track-button">
     <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="!isTracking">

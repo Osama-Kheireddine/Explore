@@ -5,6 +5,7 @@ import { GoogleMap } from '@angular/google-maps';
 import { Geolocation } from '@capacitor/geolocation';
 import { ModalController } from '@ionic/angular';
 import { PostPage } from '../pages/post/post.page';
+import { ViewAllReviewsPage } from '../pages/view-all-reviews/view-all-reviews.page';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -42,11 +43,15 @@ export class HomePage implements OnInit, AfterViewInit {
     this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(
       this.searchField.nativeElement
     );
+
+
+
     searchBox.addListener('places_changed', () =>{
       const places = searchBox.getPlaces();
       if (places.length === 0) {
         return;
       }
+      console.log(places[0].name);
       const bounds = new google.maps.LatLngBounds();
       places.forEach((place) => {
         if (!place.geometry || !place.geometry.location) {
@@ -63,8 +68,23 @@ export class HomePage implements OnInit, AfterViewInit {
           this.long = place.geometry.location.lng();
           bounds.extend(place.geometry.location);
         }
+        this.openModal(this.lat, this.long, places[0].name);
       });
       this.map.fitBounds(bounds);
     });
+  }
+
+  //open a modal for searching for reviews, photos, trails etc.
+  //pass a lat & lng or location name
+  async openModal(lat: number, lng: number, placeName: any) {
+    const latLng = {lat, lng};
+    //MODAL:
+    const modal = await this.modalController.create({
+      component: ViewAllReviewsPage,
+      componentProps: {latLong: latLng, placeNameForHeader: placeName},
+      breakpoints: [0, 0.5, 1],
+      initialBreakpoint: 0.5
+    });
+    return await modal.present();
   }
 }

@@ -1,16 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons>
-      <ion-back-button slot="start" defaultHref="home"></ion-back-button>
-      <ion-title>Account</ion-title>
-    </ion-buttons>
+    <ion-title>Results for: {{placeNameForHeader}} </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-card>
-  <ion-list>
-      <ion-item button [routerLink]="['/user-photos']">
+    <ion-list>
+      <ion-item button="">
         <ion-icon name="camera-outline" slot="start"></ion-icon>
         <span>Photo</span>
         <ion-icon
@@ -20,9 +17,9 @@
         ></ion-icon>
       </ion-item>
 
-      <ion-item button [routerLink]="['/reviews']">
+      <ion-item button [routerLink]="['/review']">
         <ion-icon name="newspaper-outline" slot="start"></ion-icon>
-        <span>Reviews</span>
+        <span>Review</span>
         <ion-icon
           class="icon-chevron"
           name="chevron-forward-outline"
@@ -30,19 +27,9 @@
         ></ion-icon>
       </ion-item>
 
-      <ion-item button [routerLink]="['/view-your-trails']">
+      <ion-item button [routerLink]="['/track-trail']">
         <ion-icon name="walk-outline" slot="start"></ion-icon>
         <span>Trails</span>
-        <ion-icon
-          class="icon-chevron"
-          name="chevron-forward-outline"
-          slot="end"
-        ></ion-icon>
-      </ion-item>
-
-      <ion-item button [routerLink]="['']">
-        <ion-icon name="cog-outline" slot="start"></ion-icon>
-        <span>Prefernces (Coming Soon...)</span>
         <ion-icon
           class="icon-chevron"
           name="chevron-forward-outline"
@@ -52,10 +39,3 @@
     </ion-list>
   </ion-card>
 </ion-content>
-<ion-footer>
-  <ion-toolbar>
-    <ion-item style="color: #205566" button (click)="signOut()"
-      >Sign-Out</ion-item
-    >
-  </ion-toolbar>
-</ion-footer>
