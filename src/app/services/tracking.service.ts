@@ -9,6 +9,7 @@ import {
   setDoc,
 } from '@angular/fire/firestore';
 import { arrayUnion, collection, serverTimestamp } from 'firebase/firestore';
+import { listAll } from 'firebase/storage';
 import { Observable } from 'rxjs';
 import { Marker } from '../pages/track-trail/track-trail.page';
 
@@ -89,6 +90,11 @@ export class TrackingService {
       this.firestore,
       `/userTrails/${this.auth}/trails`
     );
+    return collectionData(trailRef) as Observable<Trail[]>;
+  }
+
+  getAllTrails(locName: string): Observable<Trail[]>{
+    const trailRef = collection(this.firestore, `locationTrails/${locName}/trails`);
     return collectionData(trailRef) as Observable<Trail[]>;
   }
 }

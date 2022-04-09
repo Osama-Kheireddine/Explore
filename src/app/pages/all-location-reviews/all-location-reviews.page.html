@@ -1,24 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons>
-      <ion-back-button slot="start" defaultHref="account"></ion-back-button>
-      <ion-title>Reviews</ion-title>
+    <ion-buttons style="color: #205566;" (click)="dismissModal()" slot="start">
+      Close
     </ion-buttons>
+    <ion-title>All Reviews for: {{placeNameForHeader}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let review of reviewList" (click)="openModal(review)">
-    <ion-item>
+  <ion-card *ngFor="let review of reviews" (click)="openModal(review)">
+    <ion-item (click)="openModal(review)">
       <ion-avatar slot="start">
         <img src="../../assets/avatar.jpg">
       </ion-avatar>
-      <ion-label>
-        <h3 *ngIf="auth === review.user">
-          <h3>Posted by:</h3>
-          You
-        </h3>
-      </ion-label>
     </ion-item>
       <ion-card-header>
         <ion-card-title>{{review.title}}</ion-card-title>

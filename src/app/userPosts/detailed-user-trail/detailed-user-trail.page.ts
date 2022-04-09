@@ -9,7 +9,7 @@ import { Trail } from 'src/app/services/tracking.service';
   styleUrls: ['./detailed-user-trail.page.scss'],
 })
 export class DetailedUserTrailPage implements OnInit {
-  @Input() trail: Trail;
+  @Input() trail: Trail;//to get trail from trail page
   verticies: any[] = [];
   auth = getAuth().currentUser.email;
 

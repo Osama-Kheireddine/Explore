@@ -56,7 +56,14 @@ export class ReviewService {
       this.firestore,
       `userReviews/${getAuth().currentUser.email}/reviews`
     );
-    console.log('Reviews fetched');
+    return collectionData(reviewRef) as Observable<Review[]>;
+  }
+
+  getAllReviews(locationName: string): Observable<Review[]>{
+    const reviewRef = collection(
+      this.firestore,
+      `locationReviews/${locationName}/reviews`
+    );
     return collectionData(reviewRef) as Observable<Review[]>;
   }
 

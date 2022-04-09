@@ -36,10 +36,4 @@ export class ViewYourTrailsPage implements OnInit {
     });
     return await modal.present();
   }
-
-  ionViewWillEnter() {
-    setTimeout(() => {
-      this.trails = this.trails;
-    }, 1000);
-  }
 }

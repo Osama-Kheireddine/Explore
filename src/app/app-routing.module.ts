@@ -81,6 +81,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/view-all-reviews/view-all-reviews.module').then( m => m.ViewAllReviewsPageModule),
     ...canActivate(redirectUnauthorizedToLogin)
   },
+  {
+    path: 'all-location-trails',
+    loadChildren: () => import('./pages/all-location-trails/all-location-trails.module').then( m => m.AllLocationTrailsPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
+  },  {
+    path: 'all-location-reviews',
+    loadChildren: () => import('./pages/all-location-reviews/all-location-reviews.module').then( m => m.AllLocationReviewsPageModule)
+  },
+
+
 
 
 

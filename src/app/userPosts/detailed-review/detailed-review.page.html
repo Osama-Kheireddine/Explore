@@ -7,14 +7,14 @@
 </ion-header>
 
 <ion-content>
-  <google-map height="35%" [options]="mapConfigurations">
+  <google-map height="35%" [options]="mapConfigurations" [center]="center">
     <map-marker [position]="markerCoords.position"></map-marker>
   </google-map>
 
   <ion-card>
     <ion-item>
       <ion-avatar slot="start">
-        <!-- <img src="../../assets/user.jpg"> -->
+        <img src="../../assets/avatar.jpg">
       </ion-avatar>
       <ion-label>
         <h3 *ngIf="auth === review.user">
@@ -28,6 +28,5 @@
       <ion-card-title>{{review.title}}</ion-card-title>
     </ion-card-header>
     <ion-card-content> {{review.reviewBody}} </ion-card-content>
-    <!-- Add infinite scroll for comments -->
   </ion-card>
 </ion-content>

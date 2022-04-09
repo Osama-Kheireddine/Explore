@@ -9,18 +9,13 @@ import { Review } from 'src/app/pages/review/review.page';
   styleUrls: ['./detailed-review.page.scss'],
 })
 export class DetailedReviewPage implements OnInit {
-
   @Input() review: Review;
-
   auth = getAuth().currentUser.email;
-
-  myLatLng: any;
-
+  center: google.maps.LatLngLiteral;
   //for map view
   mapConfigurations = {
     disableDefaultUI: true,
     fullScreenControl: false,
-    center: {lat: 0, lng: 0},
     zoomControl: false,
     mapTypeId: 'hybrid',
     //turn off the poi
@@ -40,8 +35,7 @@ export class DetailedReviewPage implements OnInit {
 
   ngOnInit() {
     //initalize the center of the map (the review's location)
-    this.mapConfigurations.center.lat = this.review.lat;
-    this.mapConfigurations.center.lng = this.review.lng;
+    this.center = {lat: this.review.lat, lng: this.review.lng};
     //markerCoords
     this.markerCoords.position.lat = this.review.lat;
     this.markerCoords.position.lng = this.review.lng;

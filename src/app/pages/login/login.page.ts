@@ -13,7 +13,7 @@ export class LoginPage implements OnInit {
   auth = getAuth();
   usersEmail: string;
   usersPassword: string;
-
+  isiOS = false;
   constructor(
     private authService: AuthService,
     private router: Router,

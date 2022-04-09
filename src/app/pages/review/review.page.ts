@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { Router } from '@angular/router';
+import { Geolocation } from '@capacitor/geolocation';
 import {
   AlertController,
   LoadingController,
@@ -9,13 +10,14 @@ import {
 } from '@ionic/angular';
 import { getAuth } from 'firebase/auth';
 import { ReviewService } from 'src/app/services/review.service';
+import { isNull } from 'util';
 
 @Component({
   selector: 'app-review',
   templateUrl: './review.page.html',
   styleUrls: ['./review.page.scss'],
 })
-export class ReviewPage implements AfterViewInit {
+export class ReviewPage implements OnInit, AfterViewInit {
   // @ViewChild is used to query the input element & the map
   @ViewChild('mapSearchField') searchField: ElementRef; //mapSearchField comes from #mapSearchField in the input element
   // eslint-disable-next-line max-len
@@ -30,6 +32,7 @@ export class ReviewPage implements AfterViewInit {
     lat: 53.9843,
     lng: -6.3934,
   };
+  center: google.maps.LatLngLiteral;
   title: string;
   lat: number;
   locationName: string;
@@ -42,6 +45,13 @@ export class ReviewPage implements AfterViewInit {
     private alertController: AlertController,
     private loadingController: LoadingController
   ) {}
+
+    async ngOnInit() {
+      const coordinates = await Geolocation.getCurrentPosition();
+      this.lat = coordinates.coords.latitude;
+      this.lng = coordinates.coords.longitude;
+      this.center = { lat: this.lat, lng: this.lng };
+    }
 
   // use ngAfterViewInit() to tie the two together (map and search bar input)
   ngAfterViewInit() {
@@ -185,7 +195,9 @@ export class ReviewPage implements AfterViewInit {
       date: formattedDate,
     };
     await this.review.addReview(review);
-    window.location.reload();
+    // window.location.reload();
+    this.title = null;
+    this.reviewBody = null;
   }
 
   //ALERT CONTROLLER FOR LOOKS

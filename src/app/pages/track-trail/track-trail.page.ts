@@ -57,9 +57,8 @@ export class TrackTrailPage implements OnInit {
   startTracking() {
     this.isTracking = true;
     this.watch = Geolocation.watchPosition(
-      { timeout: 2350, enableHighAccuracy: true },
+      { timeout: 3350, enableHighAccuracy: true },
       (position, err) => {
-        //get the position, add it to the markers array for database entry
         if (position && this.isTracking === true) {
           const marker: Marker = {
             lat: position.coords.latitude,
@@ -80,12 +79,12 @@ export class TrackTrailPage implements OnInit {
   async stopTracking() {
     this.addNewLocation(
       this.mapMarkers
-    );
+    );//adds the trail to the db from the map markers array we populate while tracking
     this.presentToast();
     //call draw polyline method
     Geolocation.clearWatch({ id: this.watch }).then(() => {
       this.isTracking = false;
-      this.mapMarkers = [];
+      this.mapMarkers = [];//clear the markers array
     });
   }
 
