@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { AllLocationPhotosPage } from '../all-location-photos/all-location-photos.page';
 import { AllLocationReviewsPage } from '../all-location-reviews/all-location-reviews.page';
 import { AllLocationTrailsPage } from '../all-location-trails/all-location-trails.page';
 
@@ -18,9 +19,9 @@ export class ViewAllReviewsPage implements OnInit {
   async openModal(selection: string) {
     const latLng = this.latLong;
     //MODAL:
-    if (selection === 'trails') {
+    if (selection === 'photos') {
       const modal = await this.modalController.create({
-        component: AllLocationTrailsPage,
+        component: AllLocationPhotosPage,
         componentProps: {
           latLong: latLng,
           placeNameForHeader: this.placeNameForHeader,
@@ -38,7 +39,7 @@ export class ViewAllReviewsPage implements OnInit {
       });
       return await modal.present();
     }
-    if (selection === 'photos') {
+    if (selection === 'trails') {
       const modal = await this.modalController.create({
         component: AllLocationTrailsPage,
         componentProps: {

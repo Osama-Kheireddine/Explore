@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons style="color: #205566" slot="start">
+      Close
+    </ion-buttons>
+    <ion-title>Enter a location</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <input
+    #mapSearchField
+    class="my-map-search-field"
+    type="text"
+    placeholder="Search..."
+  />
+  <google-map
+    height="100%"
+    width="100%"
+    [center]="center"
+    [zoom]="zoom"
+    [options]="mapConfigurations"
+  >
+  </google-map>
+</ion-content>

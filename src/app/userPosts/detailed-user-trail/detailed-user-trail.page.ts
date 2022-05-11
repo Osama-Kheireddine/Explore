@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { getAuth } from 'firebase/auth';
-import { Trail } from 'src/app/services/tracking.service';
+import { TrackingService, Trail } from 'src/app/services/tracking.service';
 
 @Component({
   selector: 'app-detailed-user-trail',
@@ -29,13 +29,22 @@ export class DetailedUserTrailPage implements OnInit {
     strokeWeight: 6,
   };
 
-  constructor(private modalController: ModalController) {}
+  constructor(private trailService: TrackingService, private modalController: ModalController, private loading: LoadingController) {}
 
   ngOnInit() {
     this.mapConfigurations.center.lat = this.trail.points[0].lat;
     this.mapConfigurations.center.lng = this.trail.points[0].lng;
     //initalize the verticies
     this.verticies = this.trail.points;
+  }
+
+  async deleteTrail(){
+    const loading = await this.loading.create();
+    await loading.present();
+    this.trailService.delete(this.trail);
+    await loading.dismiss();
+    // window.location.replace('http://localhost:8100/reviews');
+    window.location.replace('http://explore-users.web.app/view-your-trails');
   }
 
   async dismissModal() {

@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { getAuth } from '@angular/fire/auth';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { Review } from 'src/app/pages/review/review.page';
+import { ReviewService } from 'src/app/services/review.service';
 
 @Component({
   selector: 'app-detailed-review',
@@ -18,11 +19,6 @@ export class DetailedReviewPage implements OnInit {
     fullScreenControl: false,
     zoomControl: false,
     mapTypeId: 'hybrid',
-    //turn off the poi
-    // styles: {
-    //   featureType: 'poi.business',
-    //   stylers: [{visibility: 'off'}]
-    // }
   };
   markerCoords =
   {
@@ -31,7 +27,7 @@ export class DetailedReviewPage implements OnInit {
       lng:0,
     }
   };
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private reviewService: ReviewService, private modalCtrl: ModalController, private loading: LoadingController) { }
 
   ngOnInit() {
     //initalize the center of the map (the review's location)
@@ -43,6 +39,15 @@ export class DetailedReviewPage implements OnInit {
 
   async dismissModal(){
     return await this.modalCtrl.dismiss();
+  }
+
+  async deleteReview(){
+    const loading = await this.loading.create();
+    await loading.present();
+    this.reviewService.delete(this.review);
+    await loading.dismiss();
+    // window.location.replace('http://localhost:8100/reviews');
+    window.location.replace('http://explore-users.web.app/reviews');
   }
 
 }

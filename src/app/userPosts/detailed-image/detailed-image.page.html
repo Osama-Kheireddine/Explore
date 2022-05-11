@@ -8,26 +8,43 @@
 </ion-header>
 
 <ion-content>
-  <ion-toolbar color="medium">
+  <ion-toolbar color="medium" style="opacity: 0.8" slot="fixed">
     <ion-buttons slot="start">
       <ion-button>
         <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="primary">
+    <ion-buttons slot="primary" id="size-button">
       <ion-button>
-        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-horizontal"></ion-icon>
+        <ion-icon
+          slot="icon-only"
+          ios="ellipsis-horizontal"
+          md="ellipsis-horizontal"
+        ></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title style="font-size: small;">{{user}}</ion-title>
+    <ion-popover trigger="size-button" reference="event">
+      <ng-template>
+        <ion-content>
+          <ion-buttons>
+            <ion-button color="danger" (click)="deleteImage()">
+              Delete
+            </ion-button>
+          </ion-buttons>
+        </ion-content>
+      </ng-template>
+    </ion-popover>
+    <ion-title style="font-size: small">{{user}}</ion-title>
   </ion-toolbar>
   <ion-img [src]="image"></ion-img>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons slot="start" (click)="likePhoto()">
       <ion-button>
         <ion-icon slot="icon-only" name="arrow-up"></ion-icon>
-        <!-- code here to show quantity of up votes -->
       </ion-button>
+      <ion-label *ngFor="let photo of userPhoto">
+        <p *ngIf="photo.path === storageurlPath">{{photo.likes}}</p>
+      </ion-label>
     </ion-buttons>
     <ion-buttons slot="start">
       <ion-button>

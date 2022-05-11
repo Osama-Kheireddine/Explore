@@ -31,13 +31,13 @@
     </div>
     <!-- login button -->
     <ion-button
+    name="emailPasswordLogin"
       class="loginButton"
       type="submit"
       expand="block"
       (click)="signIn()"
       >Login</ion-button
-      >
-      <!-- (click)="signIn(email.value, password.value)" -->
+    >
 
     <!-- Google login -->
     <ion-button
@@ -52,6 +52,13 @@
     <!-- sign up button -->
     <ion-button class="signUpButton" [routerLink]="['/register']" expand="block"
       >Don't have an account? Signup</ion-button
+    >
+    <ion-button
+      class="googleButton"
+      type="button"
+      expand="block"
+      [routerLink]="['/forgot-password']"
+      ><ion-icon slot="start"></ion-icon>Forgot Pasword?</ion-button
     >
   </form>
 </ion-content>

@@ -10,6 +10,7 @@ import {
 } from '@angular/fire/firestore';
 import { AlertController } from '@ionic/angular';
 import { getAuth } from 'firebase/auth';
+import { deleteDoc } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { Review } from '../pages/review/review.page';
 
@@ -90,6 +91,37 @@ export class ReviewService {
       })
       .catch((e) => window.alert('Geocoder failed due to: ' + e));
   }
+
+  delete(review: Review){
+    //delete the review for user
+    const revUserRef = doc(this.firestore, `userReviews/${review.user}/reviews/${review.title},${review.date}`);
+    deleteDoc(revUserRef);
+    //delete for location
+    const geocoder = new google.maps.Geocoder();
+
+    geocoder
+    .geocode({ location: {lat: review.lat, lng: review.lng} })
+    .then((response) => {
+      if (response.results[0]) {
+        this.locationName = response.results[0].formatted_address;
+        //call the method to add the locations review reference to it's own table
+        const revLocRef = doc(
+          this.firestore,
+          `locationReviews/${this.locationName}/reviews/${review.title},${review.date}`
+        );
+
+        deleteDoc(revLocRef);
+      } else {
+        this.showAlert(
+          'Error',
+          'An error has occurred, please try again later'
+        );
+      }
+    })
+    .catch((e) => window.alert('Geocoder failed due to: ' + e));
+
+  }
+
   async showAlert(header, message) {
     const alert = await this.alertController.create({
       header,

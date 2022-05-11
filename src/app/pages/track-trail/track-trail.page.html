@@ -8,20 +8,35 @@
 </ion-header>
 
 <ion-content>
-  <google-map width="100%" height="90%"
+  <google-map
+    width="100%"
+    height="90%"
     [options]="mapConfigurations"
     [center]="center"
   >
-  <map-polyline [path]="polylineOpt.path" [options]="polylineOpt"></map-polyline>
+    <map-polyline
+      [path]="polylineOpt.path"
+      [options]="polylineOpt"
+    ></map-polyline>
   </google-map>
   <div class="track-button">
-    <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="!isTracking">
+    <ion-fab
+      vertical="bottom"
+      horizontal="center"
+      slot="fixed"
+      *ngIf="!isTracking"
+    >
       <ion-fab-button (click)="startTracking()">
         <ion-icon name="locate"></ion-icon>
       </ion-fab-button>
     </ion-fab>
-    <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="isTracking">
-      <ion-fab-button (click)="stopTracking()" >
+    <ion-fab
+      vertical="bottom"
+      horizontal="center"
+      slot="fixed"
+      *ngIf="isTracking"
+    >
+      <ion-fab-button (click)="stopTracking()">
         <ion-icon name="pause"></ion-icon>
       </ion-fab-button>
     </ion-fab>

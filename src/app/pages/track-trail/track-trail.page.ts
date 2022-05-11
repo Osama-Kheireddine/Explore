@@ -1,9 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@capacitor/geolocation';
 import { ToastController } from '@ionic/angular';
 import { TrackingService } from 'src/app/services/tracking.service';
@@ -15,24 +10,17 @@ import { TrackingService } from 'src/app/services/tracking.service';
 })
 export class TrackTrailPage implements OnInit {
   //for tracking
-  mapMarkers: Marker[] = [];
-  // marker: Markers = null;
-  // databaseMarkers: Markers[];
+  trailCoordinates: Marker[] = [];
   isTracking = false;
   watch = null;
-  //poly line stuff
+  currentLocationMarker = [];
+  //poly-lines
   polylineOpt = {
-    path: [], //this will be the markers we're adding to the db
+    path: [], //this will be the markers we're adding to be drawn on the map
     strokeColor: '#205566',
     strokeOpacity: 1.0,
-    strokeWeight: 2,
+    strokeWeight: 6,
   };
-  vertices: google.maps.LatLngLiteral[] = [
-    { lat: 13, lng: 13 },
-    { lat: -13, lng: 0 },
-    { lat: 13, lng: -13 },
-  ];
-  //
   center: google.maps.LatLngLiteral;
   lat: any;
   long: any;
@@ -52,39 +40,59 @@ export class TrackTrailPage implements OnInit {
     this.lat = coordinates.coords.latitude;
     this.long = coordinates.coords.longitude;
     this.center = { lat: this.lat, lng: this.long };
+    this.addMarker(this.lat, this.long);
+  }
+
+  addMarker(lat: number, lng: number) {
+    this.currentLocationMarker.push({
+      position: {
+        lat,
+        lng,
+      },
+      label: {
+        color: 'red',
+        text: 'You are here ',
+      },
+      title: 'Marker title ',
+      info: 'Marker info ',
+      opacity: 0.6,
+    });
   }
 
   startTracking() {
+    const path = [];
     this.isTracking = true;
     this.watch = Geolocation.watchPosition(
       { timeout: 3350, enableHighAccuracy: true },
       (position, err) => {
         if (position && this.isTracking === true) {
+          path.push(
+            new google.maps.LatLng({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            })
+          );
+          this.polylineOpt = { ...this.polylineOpt, path };
           const marker: Marker = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
             timestamp: position.timestamp,
           };
-          // console.log(this.mapMarkers);
-          this.mapMarkers.push(marker);
-
-          this.polylineOpt.path.push({ lat: marker.lat, lng: marker.lng });
-
-          // this.addToPolyLinePath(marker);
+          //push a coord to the most recent location
+          this.trailCoordinates.push(marker);
         }
       }
     );
   }
 
   async stopTracking() {
-    this.addNewLocation(
-      this.mapMarkers
-    );//adds the trail to the db from the map markers array we populate while tracking
+    this.addNewLocation(this.trailCoordinates); //adds the trail to the db from the map markers array we populate while tracking
     this.presentToast();
     //call draw polyline method
     Geolocation.clearWatch({ id: this.watch }).then(() => {
       this.isTracking = false;
-      this.mapMarkers = [];//clear the markers array
+      this.trailCoordinates = []; //clear the markers array
+      this.polylineOpt.path = [];
     });
   }
 
@@ -94,7 +102,6 @@ export class TrackTrailPage implements OnInit {
       duration: 2000,
     });
     toast.present();
-
   }
 
   async addNewLocation(points: Marker[]) {

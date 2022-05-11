@@ -4,14 +4,14 @@ import { Firestore } from '@angular/fire/firestore';
 import {
   createUserWithEmailAndPassword,
   getAuth,
-  getRedirectResult,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
-  signInWithRedirect,
   signOut,
 } from 'firebase/auth';
 import { GoogleAuthProvider } from '@angular/fire/auth';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import { AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +24,7 @@ export class AuthService {
   credential: any;
   token: any;
 
-  constructor(private firestore: Firestore) {}
-
+  constructor(private firestore: Firestore, private alert: AlertController) {}
   //email&password signUp method
   async signUp(email: string, password: string) {
     await createUserWithEmailAndPassword(this.auth, email, password)
@@ -70,8 +69,9 @@ export class AuthService {
         // The email of the user's account used.
         const email = error.email;
         // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        // const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
+        alert('error code ' + errorCode + ' errorMessage: ' + errorMessage);
       });
   }
 
@@ -82,5 +82,29 @@ export class AuthService {
     } else {
       await signOut(this.auth);
     }
+  }
+
+  forgotPassword(email: string) {
+
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        this.showAlert('Be Patient', 'Your reset link is on the way!');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        this.showAlert('Error ', errorCode);
+
+      });
+  }
+
+  async showAlert(header, message) {
+    const alert = await this.alert.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 }

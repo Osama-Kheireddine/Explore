@@ -29,7 +29,8 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule),
+    ...canActivate(redirectLoggedIn)
    },
   {
     path: 'post',
@@ -85,10 +86,37 @@ const routes: Routes = [
     path: 'all-location-trails',
     loadChildren: () => import('./pages/all-location-trails/all-location-trails.module').then( m => m.AllLocationTrailsPageModule),
     ...canActivate(redirectUnauthorizedToLogin)
-  },  {
-    path: 'all-location-reviews',
-    loadChildren: () => import('./pages/all-location-reviews/all-location-reviews.module').then( m => m.AllLocationReviewsPageModule)
   },
+  {
+    path: 'all-location-reviews',
+    loadChildren: () => import('./pages/all-location-reviews/all-location-reviews.module').then( m => m.AllLocationReviewsPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path: 'forgot-password',
+    loadChildren: () => import('./pages/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule),
+    ...canActivate(redirectLoggedIn)
+  },
+  {
+    path: 'photos',
+    loadChildren: () => import('./pages/photos/photos.module').then( m => m.PhotosPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path: 'all-location-photos',
+    loadChildren: () => import('./pages/all-location-photos/all-location-photos.module').then( m => m.AllLocationPhotosPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path: 'map-modal',
+    loadChildren: () => import('./pages/map-modal/map-modal.module').then( m => m.MapModalPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path: 'map-trail-modal',
+    loadChildren: () => import('./pages/map-trail-modal/map-trail-modal.module').then( m => m.MapTrailModalPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
+  }
 
 
 

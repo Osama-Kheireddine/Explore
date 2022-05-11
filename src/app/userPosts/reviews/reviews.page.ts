@@ -24,8 +24,8 @@ export class ReviewsPage implements OnInit {
   ngOnInit() {
     //get reviews
     return this.review.getReviews().subscribe((res: Review[]) => {
-      // console.log('Reviews: ', res);
       this.reviewList = res;
+      this.reviewList.reverse();
     });
   }
 

@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { doc, Firestore, getDoc } from '@angular/fire/firestore';
 import { ModalController } from '@ionic/angular';
-import { get } from 'firebase/database';
-import { collection } from 'firebase/firestore';
-import { collectionData } from 'rxfire/firestore';
-import { Observable } from 'rxjs';
-import { Review } from 'src/app/pages/review/review.page';
 import { TrackingService, Trail } from 'src/app/services/tracking.service';
 import { DetailedUserTrailPage } from '../detailed-user-trail/detailed-user-trail.page';
 
@@ -24,7 +18,7 @@ export class ViewYourTrailsPage implements OnInit {
   ngOnInit() {
     return this.trailService.getUsersTrails().subscribe((res: Trail[])=>{
       this.trails = res;
-      this.trails = this.trails.reverse();
+      // this.trails = this.trails.reverse();
     });
   }
 

@@ -10,7 +10,7 @@
 <ion-content>
   <ion-card>
     <ion-list>
-      <ion-item button (click)="takePhoto()">
+      <ion-item button [routerLink]="['/photos']">
         <ion-icon name="camera-outline" slot="start"></ion-icon>
         <span>Photo</span>
         <ion-icon

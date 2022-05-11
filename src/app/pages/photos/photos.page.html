@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="post"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Post a Photo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-img
+    style="width: 100%; height: 40%"
+    *ngFor="let photo of photos; index as position"
+    [src]="photo.webviewPath"
+  ></ion-img>
+  <form>
+    <ion-card *ngIf="photoTaken">
+      <ion-card-header>
+        <ion-card-title>Upload</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-input
+            [(ngModel)]="description"
+            placeholder="Write a Caption"
+            [ngModelOptions]="{standalone: true}"
+          ></ion-input>
+        </ion-item>
+        <ion-item style="text-align: center;">
+          <ion-button (click)="openMap()">
+            Open map!
+          </ion-button>
+        </ion-item>
+        <p *ngIf="photoLocation === ''">Don't forget to add a location to where your image was taken!</p>
+        <p *ngIf="photoLocation !== ''"><ion-icon name="pin-outline"></ion-icon> {{photoLocation}}</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="!photoTaken">
+      <ion-card-header>
+        <ion-card-title>Take a Photo!</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label>To start, press the camera button below!</ion-label>
+      </ion-card-content>
+    </ion-card>
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+      <ion-fab-button *ngIf="!photoTaken" (click)="takePhoto()">
+        <ion-icon name="camera"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button *ngIf="photoTaken" (click)="postPhoto()">
+        <ion-icon name="checkmark-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button *ngIf="photoTaken" (click)="reload()">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </form>
+</ion-content>

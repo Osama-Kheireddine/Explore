@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+    <ion-buttons>
+      <ion-back-button slot="start" defaultHref="login" style="color: #205566;"></ion-back-button>
+      <ion-title>Signup</ion-title>
     </ion-buttons>
-    <ion-title>Sign Up</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -19,13 +19,12 @@
           <ion-input name="password" placeholder="Enter a password" type="password" [(ngModel)]="usersPassword" #password required></ion-input>
         </ion-item>
       </div>
-      <!-- do the commented code below later -->
-      <!-- <ion-item>
+      <ion-item>
         <ion-input placeholder="First Name" type="text" #fName required></ion-input>
       </ion-item>
       <ion-item>
         <ion-input placeholder="Last Name" type="text" #lName required></ion-input>
-      </ion-item> -->
+      </ion-item>
     </div>
     <ion-button class="signUpButton" type="submit" expand="block" (click)="signUp()">
       Signup

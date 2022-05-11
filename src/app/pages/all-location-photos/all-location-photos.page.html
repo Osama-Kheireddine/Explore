@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons style="color: #205566" (click)="dismissModal()" slot="start">
+      Close
+    </ion-buttons>
+    <ion-title>Photos at {{locationName}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="singleImage" size="6" *ngFor="let image of photos">
+        <ion-img [src]="image" alt="" (click)="openModal(image)"></ion-img>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

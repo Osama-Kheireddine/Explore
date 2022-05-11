@@ -27,6 +27,7 @@ export class RegisterPage {
       (this.usersEmailAddress && this.usersPassword !== null) ||
       (this.usersEmailAddress && this.usersPassword !== '')
     ) {
+      // if() regex for valid email?
       await this.authService
         .signUp(this.usersEmailAddress, this.usersPassword)
         .then((result) => {

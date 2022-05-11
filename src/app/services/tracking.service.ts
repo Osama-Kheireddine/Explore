@@ -8,7 +8,8 @@ import {
   orderBy,
   setDoc,
 } from '@angular/fire/firestore';
-import { arrayUnion, collection, serverTimestamp } from 'firebase/firestore';
+import { AlertController } from '@ionic/angular';
+import { arrayUnion, collection, deleteDoc, serverTimestamp } from 'firebase/firestore';
 import { listAll } from 'firebase/storage';
 import { Observable } from 'rxjs';
 import { Marker } from '../pages/track-trail/track-trail.page';
@@ -24,7 +25,7 @@ export class TrackingService {
 
   auth = getAuth().currentUser.email;
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore, private alertController: AlertController) {}
 //TODO:
   async add(points: Marker[]) {
     const mappedTrailDetails: Trail = {
@@ -52,8 +53,6 @@ export class TrackingService {
       .then((response) => {
         if (response.results[0]) {
           this.locationName = response.results[0].formatted_address;
-          console.log(this.locationName);
-
           //call the method to add the locations review reference to it's own table
           this.addTrailToLocation(this.locationName, trail);
         }
@@ -96,6 +95,46 @@ export class TrackingService {
   getAllTrails(locName: string): Observable<Trail[]>{
     const trailRef = collection(this.firestore, `locationTrails/${locName}/trails`);
     return collectionData(trailRef) as Observable<Trail[]>;
+  }
+
+  delete(trail: Trail){
+    console.log(getAuth().currentUser.email);
+
+    const trailUserRef = doc(this.firestore, `userTrails/${getAuth().currentUser.email}/trails/${trail.date}`);
+    deleteDoc(trailUserRef);
+
+    //delete for location
+    const geocoder = new google.maps.Geocoder();
+    geocoder
+    .geocode({ location: {lat: trail.points[0].lat, lng: trail.points[0].lng} })
+    .then((response) => {
+      if (response.results[0]) {
+        this.locationName = response.results[0].formatted_address;
+        //call the method to add the locations review reference to it's own table
+        const revLocRef = doc(
+          this.firestore,
+          `locationTrails/${this.locationName}/trails/${trail.points[0].lat},${trail.points[0].lng},${trail.date}`
+        );
+
+        deleteDoc(revLocRef);
+      } else {
+        this.showAlert(
+          'Error',
+          'An error has occurred, please try again later'
+        );
+      }
+    })
+    .catch((e) => window.alert('Geocoder failed due to: ' + e));
+
+  }
+
+  async showAlert(header, message) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 }
 export interface Trail {

@@ -3,6 +3,26 @@
     <ion-buttons style="color: #205566;" (click)="dismissModal()" slot="start">
       Close
     </ion-buttons>
+      <ion-buttons slot="end" id="size-button">
+        <ion-button>
+          <ion-icon
+            slot="icon-only"
+            ios="ellipsis-horizontal"
+            md="ellipsis-horizontal"
+          ></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-popover trigger="size-button" reference="event">
+      <ng-template>
+        <ion-content>
+          <ion-buttons>
+            <ion-button color="danger" (click)="deleteReview()">
+              Delete
+            </ion-button>
+          </ion-buttons>
+        </ion-content>
+      </ng-template>
+    </ion-popover>
   </ion-toolbar>
 </ion-header>
 

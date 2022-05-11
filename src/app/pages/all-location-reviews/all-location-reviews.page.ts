@@ -26,7 +26,6 @@ export class AllLocationReviewsPage implements OnInit {
 
        lng: parseFloat(this.latLong.lng.toString()),
       };
-      console.log(latlng);
      geocoder
        .geocode({ location: latlng })
        .then((response) => {

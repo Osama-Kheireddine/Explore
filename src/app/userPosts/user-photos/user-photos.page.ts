@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { DatabasePhotoRef, PhotoService } from 'src/app/services/photo.service';
+import { getAuth } from 'firebase/auth';
+import { getDownloadURL, getStorage, ref } from 'firebase/storage';
+import { UserPhoto, PhotoService } from 'src/app/services/photo.service';
 import { DetailedImagePage } from '../detailed-image/detailed-image.page';
 
 @Component({
@@ -9,40 +11,39 @@ import { DetailedImagePage } from '../detailed-image/detailed-image.page';
   styleUrls: ['./user-photos.page.scss'],
 })
 export class UserPhotosPage implements OnInit {
-  images = [
-    {
-      // eslint-disable-next-line max-len
-      path: 'https://firebasestorage.googleapis.com/v0/b/explore-users.appspot.com/o/uploads%2Fd00225138%2F8c9e3b9a-dd77-4f7c-ba0f-59567c19c09f.png?alt=media&token=977044a4-01d8-41a3-8cfa-a0678ed7aaa9'
-    },
-    {
-      // eslint-disable-next-line max-len
-      path: 'https://firebasestorage.googleapis.com/v0/b/explore-users.appspot.com/o/uploads%2Fd00225138%2F0a745ae9-8f73-4803-95f0-f6951793ab80.png?alt=media&token=fc445305-54db-4444-b72d-53a0f723a2fb'
-    },{
-      // eslint-disable-next-line max-len
-      path: 'https://firebasestorage.googleapis.com/v0/b/explore-users.appspot.com/o/uploads%2Fd00225138%2F8c9e3b9a-dd77-4f7c-ba0f-59567c19c09f.png?alt=media&token=977044a4-01d8-41a3-8cfa-a0678ed7aaa9'
-    },
-    {
-      // eslint-disable-next-line max-len
-      path: 'https://firebasestorage.googleapis.com/v0/b/explore-users.appspot.com/o/uploads%2Fd00225138%2F0a745ae9-8f73-4803-95f0-f6951793ab80.png?alt=media&token=fc445305-54db-4444-b72d-53a0f723a2fb'
-    },{
-      // eslint-disable-next-line max-len
-      path: 'https://firebasestorage.googleapis.com/v0/b/explore-users.appspot.com/o/uploads%2Fd00225138%2F8c9e3b9a-dd77-4f7c-ba0f-59567c19c09f.png?alt=media&token=977044a4-01d8-41a3-8cfa-a0678ed7aaa9'
-    },
-    {
-      // eslint-disable-next-line max-len
-      path: 'https://firebasestorage.googleapis.com/v0/b/explore-users.appspot.com/o/uploads%2Fd00225138%2F0a745ae9-8f73-4803-95f0-f6951793ab80.png?alt=media&token=fc445305-54db-4444-b72d-53a0f723a2fb'
-    },{
-      // eslint-disable-next-line max-len
-      path: 'https://firebasestorage.googleapis.com/v0/b/explore-users.appspot.com/o/uploads%2Fd00225138%2F8c9e3b9a-dd77-4f7c-ba0f-59567c19c09f.png?alt=media&token=977044a4-01d8-41a3-8cfa-a0678ed7aaa9'
-    },
-    {
-      // eslint-disable-next-line max-len
-      path: 'https://firebasestorage.googleapis.com/v0/b/explore-users.appspot.com/o/uploads%2Fd00225138%2F0a745ae9-8f73-4803-95f0-f6951793ab80.png?alt=media&token=fc445305-54db-4444-b72d-53a0f723a2fb'
-    }
-  ];
-  constructor(private photoService: PhotoService, private modalController: ModalController) {}
+  imageReferences = [];
+  imageURLs: string;
+  images = [];
+  constructor(
+    private photoService: PhotoService,
+    private modalController: ModalController
+  ) {}
 
   ngOnInit() {
+    const emailSplit = getAuth().currentUser.email.split('@');
+    let imageRef;
+    //get photo file names from firestore, then pass to a function to create the list of photos to return
+    this.photoService.getPhotos().subscribe((res: UserPhoto[]) => {
+      this.imageReferences = res;
+      //now use this.images to get all photos
+      // eslint-disable-next-line @typescript-eslint/prefer-for-of
+      for (let i = 0; i < this.imageReferences.length; i++) {
+        const storage = getStorage();
+        const pathReference = ref(
+          storage,
+          `uploads/${emailSplit[0]}/${this.imageReferences[i].path}.png`
+        );
+        getDownloadURL(pathReference)
+          .then((url) => {
+            imageRef = url;
+            this.images.push(imageRef);
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      }
+      this.images = [];
+    });
   }
 
   async openModal(imagePassed: string) {

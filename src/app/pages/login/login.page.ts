@@ -58,7 +58,7 @@ export class LoginPage implements OnInit {
           this.router.navigateByUrl('/home');
           this.presentToast();
         }else {
-          this.showAlert('Login Failed','Please try again!');
+          this.showAlert('Login Failed','Please Try Again! (try disabling pop-ups)');
         }
       })
       .catch(() => {

@@ -27,6 +27,7 @@ export class ReviewPage implements OnInit, AfterViewInit {
     disableDefaultUI: true,
     fullScreenControl: false,
     zoomControl: false,
+    mapTypeId: 'hybrid'
   };
   initialCoord = {
     lat: 53.9843,
@@ -38,12 +39,12 @@ export class ReviewPage implements OnInit, AfterViewInit {
   locationName: string;
   lng: number;
   reviewBody: string;
-  reviewsList: Review[];
   markers = [];
   constructor(
     private review: ReviewService,
     private alertController: AlertController,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private toastController: ToastController
   ) {}
 
     async ngOnInit() {
@@ -105,18 +106,10 @@ export class ReviewPage implements OnInit, AfterViewInit {
         lat: this.lat,
         lng: this.lng,
       },
-      label: {
-        color: 'red',
-        text: 'Review here ',
-      },
-      title: 'Marker title ',
-      info: 'Marker info ',
       options: {
         animation: google.maps.Animation.DROP,
-        icon: '../../../assets/icon/mapMarkerBlueDot.jpg',
       },
       opacity: 0.6,
-      //MUST CHANGE SIZE OF MARKER, ALSO ADD THIS MARKER CODE TO TRAILS AND REMOVE FROM THIS
     });
   }
 
@@ -178,6 +171,7 @@ export class ReviewPage implements OnInit, AfterViewInit {
         }
       })
       .catch((e) => window.alert('Geocoder failed due to: ' + e));
+      this.presentToast();
   }
 
   async finalizePost(location: string) {
@@ -194,10 +188,21 @@ export class ReviewPage implements OnInit, AfterViewInit {
       lng: this.lng,
       date: formattedDate,
     };
-    await this.review.addReview(review);
+    if(review.title !== ''  || review.reviewBody !== ''){
+      await this.review.addReview(review);
+    }
     // window.location.reload();
     this.title = null;
     this.reviewBody = null;
+    this.markers = [];
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Review posted!',
+      duration: 1500,
+    });
+    toast.present();
   }
 
   //ALERT CONTROLLER FOR LOOKS
